@@ -13,4 +13,7 @@ public interface TopicoService {
 
     TopicosResponseDto findById(Long id);
 
+    void delete(Long id);
+
+    TopicosResponseDto atualizar(TopicosRequestDto requestDto, Long id);
 }

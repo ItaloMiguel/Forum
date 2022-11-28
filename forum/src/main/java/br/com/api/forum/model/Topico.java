@@ -1,6 +1,9 @@
 package br.com.api.forum.model;
 
 import br.com.api.forum.enums.StatusTopico;
+import br.com.api.forum.exceptions.CursoNotFoundException;
+import br.com.api.forum.payload.request.TopicosRequestDto;
+import br.com.api.forum.repository.RepositorioDeCursoH2;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -16,6 +19,7 @@ public class Topico {
     private String titulo;
     private String mensagem;
     private LocalDateTime dataCriacao;
+    private LocalDateTime dataAtualizacao;
     @Enumerated(EnumType.STRING)
     private StatusTopico status;
     @ManyToOne
@@ -100,6 +104,14 @@ public class Topico {
         this.respostas = respostas;
     }
 
+    public LocalDateTime getDataAtualizacao() {
+        return dataAtualizacao;
+    }
+
+    public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
+        this.dataAtualizacao = dataAtualizacao;
+    }
+
     @Override
     public String toString() {
         return "Topico{" +
@@ -124,5 +136,14 @@ public class Topico {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public Topico atualizar(TopicosRequestDto requestDto, RepositorioDeCursoH2 repositorioDeCurso) {
+        this.curso = repositorioDeCurso.findByNome(requestDto.getNomeCurso())
+                .orElseThrow(() -> new CursoNotFoundException(requestDto.getNomeCurso()));
+        this.mensagem = requestDto.getMensagem();
+        this.titulo = requestDto.getTitulo();
+        this.dataAtualizacao = LocalDateTime.now();
+        return this;
     }
 }

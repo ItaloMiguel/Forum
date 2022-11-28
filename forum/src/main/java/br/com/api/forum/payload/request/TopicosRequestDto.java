@@ -45,7 +45,8 @@ public class TopicosRequestDto {
     }
 
     public Topico converter(RepositorioDeCursoH2 repositorioDeCurso) {
-        Curso curso = repositorioDeCurso.findByNome(nomeCurso).orElseThrow(() -> new CursoNotFoundException(nomeCurso));
+        Curso curso = repositorioDeCurso.findByNome(nomeCurso)
+                .orElseThrow(() -> new CursoNotFoundException(nomeCurso));
         return new Topico(titulo, mensagem, curso);
     }
 }
