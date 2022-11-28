@@ -14,16 +14,16 @@ public class TopicosResponseDto {
     private LocalDateTime dataCriacao;
     private StatusTopico status;
     private Usuario autor;
-    private Curso curso;
+    private CursoResponseDto cursoResponseDto;
     private List<Resposta> respostas;
 
-    public TopicosResponseDto(String titulo, String mensagem, LocalDateTime dataCriacao, StatusTopico status, Usuario autor, Curso curso, List<Resposta> respostas) {
+    public TopicosResponseDto(String titulo, String mensagem, LocalDateTime dataCriacao, StatusTopico status, Usuario autor, Curso cursoResponseDto, List<Resposta> respostas) {
         this.titulo = titulo;
         this.mensagem = mensagem;
         this.dataCriacao = dataCriacao;
         this.status = status;
         this.autor = autor;
-        this.curso = curso;
+        this.cursoResponseDto = new CursoResponseDto(cursoResponseDto.getNome(), cursoResponseDto.getCategoria());
         this.respostas = respostas;
     }
 
@@ -67,12 +67,12 @@ public class TopicosResponseDto {
         this.autor = autor;
     }
 
-    public Curso getCurso() {
-        return curso;
+    public CursoResponseDto getCursoResponseDto() {
+        return cursoResponseDto;
     }
 
-    public void setCurso(Curso curso) {
-        this.curso = curso;
+    public void setCursoResponseDto(CursoResponseDto cursoResponseDto) {
+        this.cursoResponseDto = cursoResponseDto;
     }
 
     public List<Resposta> getRespostas() {

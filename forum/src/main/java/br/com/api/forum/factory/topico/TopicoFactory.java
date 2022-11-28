@@ -1,6 +1,7 @@
 package br.com.api.forum.factory.topico;
 
 import br.com.api.forum.model.Topico;
+import br.com.api.forum.payload.request.TopicosRequestDto;
 import br.com.api.forum.payload.response.TopicosResponseDto;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,6 +13,7 @@ public class TopicoFactory {
 
     private TopicosResponseDto topicosResponseDto;
     private List<TopicosResponseDto> topicosResponseDtoList;
+    private Topico topico;
 
     public TopicoFactory converterParaUmaLista(List<Topico> topicos) {
         this.topicosResponseDtoList = topicos.stream()
