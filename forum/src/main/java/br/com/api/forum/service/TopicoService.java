@@ -1,19 +1,20 @@
 package br.com.api.forum.service;
 
 import br.com.api.forum.payload.request.TopicosRequestDto;
-import br.com.api.forum.payload.response.TopicosResponseDto;
+import br.com.api.forum.payload.response.DetalheTopicosResponseDto;
+import br.com.api.forum.payload.response.TopicosReponseDto;
 
 import java.util.*;
 
 public interface TopicoService {
 
-    TopicosResponseDto save(TopicosRequestDto requestDto);
+    TopicosReponseDto save(TopicosRequestDto requestDto);
 
-    List<TopicosResponseDto> listAll();
+    List<TopicosReponseDto> listAll();
 
-    TopicosResponseDto findById(Long id);
+    DetalheTopicosResponseDto findById(Long id);
 
     void delete(Long id);
 
-    TopicosResponseDto atualizar(TopicosRequestDto requestDto, Long id);
+    TopicosReponseDto atualizar(TopicosRequestDto requestDto, Long id);
 }

@@ -1,14 +1,16 @@
 package br.com.api.forum.payload.response;
 
+import br.com.api.forum.model.Curso;
+
 import java.util.Objects;
 
 public class CursoResponseDto {
     private String nome;
     private String categoria;
 
-    public CursoResponseDto(String nome, String categoria) {
-        this.nome = nome;
-        this.categoria = categoria;
+    public CursoResponseDto(Curso curso) {
+        this.nome = curso.getNome();
+        this.categoria = curso.getCategoria();
     }
 
     public String getNome() {
