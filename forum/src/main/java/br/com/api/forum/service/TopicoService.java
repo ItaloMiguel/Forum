@@ -10,4 +10,7 @@ public interface TopicoService {
     TopicosResponseDto save(TopicosRequestDto requestDto);
 
     List<TopicosResponseDto> listAll();
+
+    TopicosResponseDto findById(Long id);
+
 }

@@ -35,6 +35,12 @@ public class TopicoServiceImpl implements TopicoService {
     }
 
     @Override
+    public TopicosResponseDto findById(Long id) {
+        Topico topico = repositorioDeTopicos.findById(id).orElseThrow(() -> new CursoNotFoundException(id.toString()));
+        return this.topicoFactory.converter(topico).build();
+    }
+
+    @Override
     public TopicosResponseDto save(TopicosRequestDto requestDto) {
         Topico topico = requestDto.converter(repositorioDeCurso);
         repositorioDeTopicos.save(topico);

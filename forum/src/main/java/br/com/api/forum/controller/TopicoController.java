@@ -5,6 +5,8 @@ import br.com.api.forum.payload.response.MessagemResponse;
 import br.com.api.forum.payload.response.TopicosResponseDto;
 import br.com.api.forum.service.TopicoService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -26,6 +28,12 @@ public class TopicoController {
     public ResponseEntity<List<TopicosResponseDto>> listarTudo() {
         List<TopicosResponseDto> topicosResponseDtos = topicoService.listAll();
         return ResponseEntity.ok().body(topicosResponseDtos);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<TopicosResponseDto> detalhar(@PathVariable("id") Long id) {
+        TopicosResponseDto service = topicoService.findById(id);
+        return ResponseEntity.ok().body(service);
     }
 
     @PostMapping(produces = "application/json")
