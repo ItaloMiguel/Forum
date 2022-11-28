@@ -11,10 +11,13 @@ import br.com.api.forum.payload.response.TopicosReponseDto;
 import br.com.api.forum.repository.RepositirioDeTopicoH2;
 import br.com.api.forum.repository.RepositorioDeCursoH2;
 import br.com.api.forum.service.TopicoService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -34,9 +37,15 @@ public class TopicoServiceImpl implements TopicoService {
     }
 
     @Override
-    public List<TopicosReponseDto> listAll() {
-        List<Topico> topicoList = repositorioDeTopicos.findAll();
-        return this.topicoFactory.converterParaUmaLista(topicoList).buildList();
+    public Page<TopicosReponseDto> findByCursoNome(String nomeCurso, Pageable paginacao) {
+        Page<Topico> topicosPage = repositorioDeTopicos.findByCursoNome(nomeCurso, paginacao).orElseGet(() -> repositorioDeTopicos.findAll(paginacao));
+        return this.topicoFactory.converterParaUmaListaPage(topicosPage).buildList();
+    }
+
+    @Override
+    public Page<TopicosReponseDto> listAll(Pageable paginacao) {
+        Page<Topico> topicoList = repositorioDeTopicos.findAll(paginacao);
+        return this.topicoFactory.converterParaUmaListaPage(topicoList).buildList();
     }
 
     @Override

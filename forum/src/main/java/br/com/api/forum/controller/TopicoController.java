@@ -6,6 +6,10 @@ import br.com.api.forum.payload.response.MessagemResponse;
 import br.com.api.forum.payload.response.TopicosReponseDto;
 import br.com.api.forum.service.TopicoService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -24,8 +28,16 @@ public class TopicoController {
     }
 
     @GetMapping(produces = "application/json")
-    public ResponseEntity<List<TopicosReponseDto>> listarTudo() {
-        List<TopicosReponseDto> topicosResponseDtos = topicoService.listAll();
+    public ResponseEntity<Page<TopicosReponseDto>> listarTudo(
+            @RequestParam(required = false) String nomeCurso,
+            @PageableDefault(sort = "id", size = 5,  direction = Sort.Direction.ASC)
+            Pageable paginacao) {
+
+        if (nomeCurso != null) {
+            Page<TopicosReponseDto> topicosReponseDtos = topicoService.findByCursoNome(nomeCurso, paginacao);
+            return ResponseEntity.ok().body(topicosReponseDtos);
+        }
+        Page<TopicosReponseDto> topicosResponseDtos = topicoService.listAll(paginacao);
         return ResponseEntity.ok().body(topicosResponseDtos);
     }
 
