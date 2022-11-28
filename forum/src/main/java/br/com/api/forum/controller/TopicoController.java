@@ -6,6 +6,7 @@ import br.com.api.forum.payload.response.MessagemResponse;
 import br.com.api.forum.payload.response.TopicosReponseDto;
 import br.com.api.forum.service.TopicoService;
 import jakarta.validation.Valid;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/topicos")
@@ -28,7 +28,8 @@ public class TopicoController {
     }
 
     @GetMapping(produces = "application/json")
-    public ResponseEntity<Page<TopicosReponseDto>> listarTudo(
+    @Cacheable(value = "listaDeTopicos")
+    public ResponseEntity<Page<TopicosReponseDto>> listarTodos(
             @RequestParam(required = false) String nomeCurso,
             @PageableDefault(sort = "id", size = 5,  direction = Sort.Direction.ASC)
             Pageable paginacao) {
