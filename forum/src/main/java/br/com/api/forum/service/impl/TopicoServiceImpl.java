@@ -34,8 +34,9 @@ public class TopicoServiceImpl implements TopicoService {
     }
 
     @Override
-    public void save(TopicosRequestDto requestDto) {
+    public TopicosResponseDto save(TopicosRequestDto requestDto) {
         Topico topico = requestDto.converter(repositorioDeCurso);
         repositorioDeTopicos.save(topico);
+        return this.topicoFactory.converter(topico).build();
     }
 }

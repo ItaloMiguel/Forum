@@ -4,10 +4,15 @@ import br.com.api.forum.payload.request.TopicosRequestDto;
 import br.com.api.forum.payload.response.MessagemResponse;
 import br.com.api.forum.payload.response.TopicosResponseDto;
 import br.com.api.forum.service.TopicoService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -27,8 +32,9 @@ public class TopicoCotroller {
     }
 
     @PostMapping(produces = "application/json")
-    public ResponseEntity<?> cadastrar(@RequestBody TopicosRequestDto requestDto) {
-        topicoService.save(requestDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new MessagemResponse("Topico criado com sucesso!"));
+    public ResponseEntity<?> cadastrar(@RequestBody @Valid TopicosRequestDto requestDto, UriComponentsBuilder uriBuilder) {
+        TopicosResponseDto topicosResponseDto = topicoService.save(requestDto);
+        URI uri = uriBuilder.path("/api/v1/topicos/{id}").buildAndExpand(topicosResponseDto.getId()).toUri();
+        return ResponseEntity.created(uri).body(new MessagemResponse("Topico criado com sucesso!"));
     }
 }

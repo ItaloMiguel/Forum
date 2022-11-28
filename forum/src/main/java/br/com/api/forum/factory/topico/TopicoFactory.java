@@ -18,6 +18,7 @@ public class TopicoFactory {
     public TopicoFactory converterParaUmaLista(List<Topico> topicos) {
         this.topicosResponseDtoList = topicos.stream()
                 .map(topico -> new TopicosResponseDto(
+                        topico.getId(),
                         topico.getTitulo(),
                         topico.getMensagem(),
                         topico.getDataCriacao(),
@@ -29,7 +30,24 @@ public class TopicoFactory {
         return this;
     }
 
+    public TopicoFactory converter(Topico topico) {
+        this.topicosResponseDto = new TopicosResponseDto(
+                topico.getId(),
+                topico.getTitulo(),
+                topico.getMensagem(),
+                topico.getDataCriacao(),
+                topico.getStatus(),
+                topico.getAutor(),
+                topico.getCurso(),
+                topico.getRespostas());
+        return this;
+    }
+
     public List<TopicosResponseDto> buildList() {
         return this.topicosResponseDtoList;
+    }
+
+    public TopicosResponseDto build() {
+        return this.topicosResponseDto;
     }
 }

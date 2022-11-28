@@ -7,8 +7,10 @@ import br.com.api.forum.model.Usuario;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 public class TopicosResponseDto {
+    private Long id;
     private String titulo;
     private String mensagem;
     private LocalDateTime dataCriacao;
@@ -17,7 +19,8 @@ public class TopicosResponseDto {
     private CursoResponseDto cursoResponseDto;
     private List<Resposta> respostas;
 
-    public TopicosResponseDto(String titulo, String mensagem, LocalDateTime dataCriacao, StatusTopico status, Usuario autor, Curso cursoResponseDto, List<Resposta> respostas) {
+    public TopicosResponseDto(Long id, String titulo, String mensagem, LocalDateTime dataCriacao, StatusTopico status, Usuario autor, Curso cursoResponseDto, List<Resposta> respostas) {
+        this.id = id;
         this.titulo = titulo;
         this.mensagem = mensagem;
         this.dataCriacao = dataCriacao;
@@ -81,5 +84,39 @@ public class TopicosResponseDto {
 
     public void setRespostas(List<Resposta> respostas) {
         this.respostas = respostas;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "TopicosResponseDto{" +
+                "id=" + id +
+                ", titulo='" + titulo + '\'' +
+                ", mensagem='" + mensagem + '\'' +
+                ", dataCriacao=" + dataCriacao +
+                ", status=" + status +
+                ", autor=" + autor +
+                ", cursoResponseDto=" + cursoResponseDto +
+                ", respostas=" + respostas +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TopicosResponseDto that)) return false;
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

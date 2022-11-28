@@ -9,5 +9,5 @@ public interface TopicoService {
 
     List<TopicosResponseDto> listAll();
 
-    void save(TopicosRequestDto requestDto);
+    TopicosResponseDto save(TopicosRequestDto requestDto);
 }
