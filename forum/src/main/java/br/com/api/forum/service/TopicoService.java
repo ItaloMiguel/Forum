@@ -7,7 +7,7 @@ import java.util.*;
 
 public interface TopicoService {
 
-    List<TopicosResponseDto> listAll();
-
     TopicosResponseDto save(TopicosRequestDto requestDto);
+
+    List<TopicosResponseDto> listAll();
 }

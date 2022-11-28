@@ -1,5 +1,6 @@
 package br.com.api.forum.service.impl;
 
+import br.com.api.forum.exceptions.CursoNotFoundException;
 import br.com.api.forum.factory.topico.TopicoFactory;
 import br.com.api.forum.model.Topico;
 import br.com.api.forum.payload.request.TopicosRequestDto;
@@ -29,8 +30,8 @@ public class TopicoServiceImpl implements TopicoService {
 
     @Override
     public List<TopicosResponseDto> listAll() {
-        List<Topico> topicos = repositorioDeTopicos.findAll();
-        return this.topicoFactory.converterParaUmaLista(topicos).buildList();
+        List<Topico> topicoList = repositorioDeTopicos.findAll();
+        return this.topicoFactory.converterParaUmaLista(topicoList).buildList();
     }
 
     @Override
