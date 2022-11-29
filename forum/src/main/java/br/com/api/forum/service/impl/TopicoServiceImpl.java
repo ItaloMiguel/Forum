@@ -37,24 +37,28 @@ public class TopicoServiceImpl implements TopicoService {
     }
 
     @Override
+    @Transactional
     public Page<TopicosReponseDto> findByCursoNome(String nomeCurso, Pageable paginacao) {
         Page<Topico> topicosPage = repositorioDeTopicos.findByCursoNome(nomeCurso, paginacao).orElseGet(() -> repositorioDeTopicos.findAll(paginacao));
         return this.topicoFactory.converterParaUmaListaPage(topicosPage).buildList();
     }
 
     @Override
+    @Transactional
     public Page<TopicosReponseDto> listAll(Pageable paginacao) {
         Page<Topico> topicoList = repositorioDeTopicos.findAll(paginacao);
         return this.topicoFactory.converterParaUmaListaPage(topicoList).buildList();
     }
 
     @Override
+    @Transactional
     public DetalheTopicosResponseDto findById(Long id) {
         Topico topico = repositorioDeTopicos.findById(id).orElseThrow(() -> new CursoNotFoundException(id.toString()));
         return this.topicoDetalheFactory.converter(topico).build();
     }
 
     @Override
+    @Transactional
     public TopicosReponseDto save(TopicosRequestDto requestDto) {
         Topico topico = requestDto.converter(repositorioDeCurso);
         repositorioDeTopicos.save(topico);
@@ -62,6 +66,7 @@ public class TopicoServiceImpl implements TopicoService {
     }
 
     @Override
+    @Transactional
     public TopicosReponseDto atualizar(TopicosRequestDto requestDto, Long id) {
         Topico topico = repositorioDeTopicos.findById(id).orElseThrow(() -> new TopicoNotFoundException(id));
         Topico topicoAtualizado = topico.atualizar(requestDto, repositorioDeCurso);
@@ -70,6 +75,7 @@ public class TopicoServiceImpl implements TopicoService {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         repositorioDeTopicos.deleteById(id);
     }

@@ -6,6 +6,7 @@ import br.com.api.forum.payload.response.MessagemResponse;
 import br.com.api.forum.payload.response.TopicosReponseDto;
 import br.com.api.forum.service.TopicoService;
 import jakarta.validation.Valid;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -49,6 +50,7 @@ public class TopicoController {
     }
 
     @PostMapping(produces = "application/json")
+    @CacheEvict(value = "listaDeTopicos", allEntries = true)
     public ResponseEntity<?> cadastrar(@RequestBody @Valid TopicosRequestDto requestDto, UriComponentsBuilder uriBuilder) {
         TopicosReponseDto topicosResponseDto = topicoService.save(requestDto);
         URI uri = uriBuilder.path("/api/v1/topicos/{id}").buildAndExpand(topicosResponseDto.getId()).toUri();
@@ -56,6 +58,7 @@ public class TopicoController {
     }
 
     @PutMapping("/{id}")
+    @CacheEvict(value = "listaDeTopicos", allEntries = true)
     public ResponseEntity<?> atualizar(@RequestBody @Valid TopicosRequestDto requestDto, @PathVariable("id") Long id,
                                        UriComponentsBuilder uriBuilder) {
         TopicosReponseDto topicosResponseDto = topicoService.atualizar(requestDto, id);
@@ -64,6 +67,7 @@ public class TopicoController {
     }
 
     @DeleteMapping("/{id}")
+    @CacheEvict(value = "listaDeTopicos", allEntries = true)
     public ResponseEntity<?> deletar(@PathVariable("id") Long id) {
         topicoService.delete(id);
         return ResponseEntity.ok().body(new MessagemResponse("Tópico removido com sucesso!"));
